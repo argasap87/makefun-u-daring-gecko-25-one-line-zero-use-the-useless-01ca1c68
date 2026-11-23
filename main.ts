@@ -9,6 +9,14 @@ import { dirname } from "node:path";
 const ENTRY =
   "I can read any mind on Earth \u2014 but only in a language that went extinct in 1402.";
 
+// Runtime guard: the bounty requires exactly one non-empty line of 1-200 chars.
+if (!ENTRY.trim() || ENTRY.length > 200 || ENTRY.includes("\n")) {
+  console.error(
+    `Invalid entry: expected one non-empty line of 1-200 chars, got ${ENTRY.length} chars.`,
+  );
+  process.exit(1);
+}
+
 const outPath = "/output/entry.txt";
 mkdirSync(dirname(outPath), { recursive: true });
 writeFileSync(outPath, ENTRY + "\n", "utf8");
